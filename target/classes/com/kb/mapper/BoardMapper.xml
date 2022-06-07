@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kb.mapper.BoardMapper">
+	<select id="getList" resultType="com.kb.domain.BoardVO">
+		SELECT * FROM tbl_board ORDER BY bno DESC LIMIT 0, 100
+	</select>
+	
+	<select id="getListWithPaging" resultType="com.kb.domain.BoardVO">
+		<![CDATA[
+		SELECT * FROM tbl_board 
+		WHERE 1=1 
+		]]>
+		<choose>
+			<when test="type == 'title'">
+			AND title LIKE concat('%',#{keyword},'%')
+			</when>
+			<when test="type == 'content'">
+			AND content LIKE concat('%',#{keyword},'%')
+			</when>
+		</choose>
+		<![CDATA[
+		ORDER BY bno DESC 
+		LIMIT #{amount} offset #{pageStart}
+		]]>
+	</select>
+	
+	<select id="getListWithCnt" resultType="int">
+		SELECT count(*) FROM tbl_board
+		WHERE 2<![CDATA[>]]>1 
+		<choose>
+			<when test="type == 'title'">
+			AND title LIKE concat('%',#{keyword},'%')
+			</when>
+			<when test="type == 'content'">
+			AND content LIKE concat('%',#{keyword},'%')
+			</when>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tbl_board (title, content, writer)
+		VALUES (#{title}, #{content}, #{writer})
+	</insert>
+	
+	<select id="read" resultType="com.kb.domain.BoardVO">
+		SELECT * FROM tbl_board WHERE bno = #{bno}
+	</select>
+	
+	<update id="update">
+		UPDATE tbl_board SET title = #{title}, 
+							content = #{content}, 
+							writer = #{writer}, 
+							updatedate = now()
+		WHERE bno = #{bno}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM tbl_board WHERE bno = #{bno}
+	</delete>
+	
+</mapper>
+
+
+
+
+

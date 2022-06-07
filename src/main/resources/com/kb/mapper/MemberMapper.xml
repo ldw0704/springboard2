@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kb.mapper.MemberMapper">
+	<select id="getList" resultType="com.kb.domain.MemberVO">
+		SELECT * FROM tbl_member ORDER BY num DESC LIMIT 0, 100
+	</select>
+	
+	<select id="getListWithPaging" resultType="com.kb.domain.MemberVO">
+		<![CDATA[
+		SELECT * FROM tbl_member 
+		WHERE 1=1 
+		]]>
+		<choose>
+			<when test="type == 'uname'">
+			AND uname LIKE concat('%',#{keyword},'%')
+			</when>
+			<when test="type == 'uid'">
+			AND uid LIKE concat('%',#{keyword},'%')
+			</when>
+		</choose>
+		<![CDATA[
+		ORDER BY num DESC 
+		LIMIT #{amount} offset #{pageStart}
+		]]>
+	</select>
+	
+	<select id="getListWithCnt" resultType="int">
+		SELECT count(*) FROM tbl_member
+		WHERE 2<![CDATA[>]]>1 
+		<choose>
+			<when test="type == 'uname'">
+			AND uname LIKE concat('%',#{keyword},'%')
+			</when>
+			<when test="type == 'uid'">
+			AND uid LIKE concat('%',#{keyword},'%')
+			</when>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tbl_member (uname, schoolname, gradeclass, uid, upw, route, boardingplace, joindate, coupon)
+		VALUES (#{uname}, #{schoolname}, #{gradeclass}, #{uid}, sha1(#{upw}), #{route}, #{boardingplace}, now(), #{coupon})
+	</insert>
+	
+	<select id="read" resultType="com.kb.domain.MemberVO">
+		SELECT * FROM tbl_member WHERE num = #{num}
+	</select>
+	
+	<update id="update">
+		UPDATE tbl_member SET uname = #{uname}, 
+						schoolname = #{schoolname}, 
+						gradeclass = #{gradeclass}, 
+						uid = #{uid}, 
+						upw = sha1(#{upw}), 
+						route = #{route}, 
+						boardingplace = #{boardingplace}, 
+						coupon = #{coupon}
+		WHERE num = #{num}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM tbl_member WHERE num = #{num}
+	</delete>
+	
+</mapper>
+
+
+
+
+
