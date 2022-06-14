@@ -1,7 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"  %> 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"  %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%
+    //pageContext.setAttribute("br", "<br/>");
+	//pageContext.setAttribute("cn", "\n");
+%>  
 <!-- JSP include -->
 <%-- <%@ include file="../includes/header.jsp" %> --%>
 <!-- JSP 액션태그 include -->
@@ -20,13 +25,29 @@
 					</p>
 
 					<div class="panel-body">
-						<form id="frm" method="post" action="">
+						<form id="frm" method="post" action="" enctype="multipart/form-data">
 						<input type="hidden" name="bno" id="bno" value="${board.bno}">
-							<div class="form-group">
+						<div class="form-group">
 								<label>제목</label><input type="text" name="title" id="title" class="form-control" value="${board.title}" required="required">
 							</div>
 							<div class="form-group">
-								<label>내용</label><textarea name="content" id="content" class="form-control" style="resize:none;" required="required">${board.content}</textarea>
+								<label>내용</label><textarea name="content" id="content" class="form-control" style="resize:none;" required="required">${board.content }</textarea>
+								<c:set value="-1" var="cnt"></c:set>								
+								<c:forEach items="${board.attachList }" var="attach">
+									<input type="hidden" name="oldfile" value="${attach.fileName }"/>
+									<c:set value="${status.count }" var="cnt"></c:set>
+									<a href="/download?fileName=${attach.fileName }"><img src="display?fileName=sm_${attach.fileName}" alt="첨부이미지"></a>									
+								</c:forEach>								
+								<c:if test="${cnt == -1 }"><input type="hidden" name="oldfile" value="${attach.fileName }"/></c:if>
+									<%-- ${fn:replace(board.content,br,cn)} --%>
+									<script>
+									var str = $("#content").val();									
+									str = str.replace(/(\r\n|\n\r|\r|\n)/g,"<br>");									
+									document.write(str);
+									</script>			
+								</div>
+							<div class="form-group">
+								<label>첨부파일</label><input type="file" name="upfile" multiple="multiple" id="upfile" class="form-control" value="${board.writer}" >
 							</div>
 							<div class="form-group">
 								<label>작성자</label><input type="text" name="writer" id="writer" class="form-control" value="${board.writer}" required="required">
@@ -50,7 +71,10 @@ $(document).ready(function(){
 			$("#frm").submit();
 		}
 	});
+	
+	
 });
+
 </script>
 
 <!-- JSP 액션태그 include -->

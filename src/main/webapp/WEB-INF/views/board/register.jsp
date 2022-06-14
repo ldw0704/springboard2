@@ -20,12 +20,15 @@
 					</p>
 
 					<div class="panel-body">
-						<form method="post" action="">
+						<form method="post" action="" enctype="multipart/form-data">
 							<div class="form-group">
 								<label>제목</label><input type="text" name="title" id="title" class="form-control" value="" required="required">
 							</div>
 							<div class="form-group">
 								<label>내용</label><textarea name="content" id="content" class="form-control" style="resize:none;" required="required"></textarea>
+							</div>
+							<div class="form-group">
+								<label>첨부파일</label><input type="file" name="upfile" multiple="multiple" id="upfile" class="form-control" value="" required="required">
 							</div>
 							<div class="form-group">
 								<label>작성자</label><input type="text" name="writer" id="writer" class="form-control" value="" required="required">

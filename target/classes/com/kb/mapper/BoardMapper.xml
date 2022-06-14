@@ -41,9 +41,14 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	</select>
 	
 	<insert id="insert">
-		INSERT INTO tbl_board (title, content, writer)
-		VALUES (#{title}, #{content}, #{writer})
-	</insert>
+      INSERT INTO tbl_board (title, content, writer)
+      VALUES (#{title}, #{content}, #{writer})
+      
+      <selectKey keyColumn="id" keyProperty="bno" 
+      order="AFTER" resultType="java.lang.Integer">
+        SELECT LAST_INSERT_ID() AS id
+       </selectKey>
+   </insert>
 	
 	<select id="read" resultType="com.kb.domain.BoardVO">
 		SELECT * FROM tbl_board WHERE bno = #{bno}

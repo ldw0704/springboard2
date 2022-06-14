@@ -58,9 +58,9 @@ public class BoardServiceImplTests {
 	}
 	
 	
-	public void remove() {
-		service.remove(458732);
-	}
+	//public void remove() {
+	//	service.remove(458732);
+	//}
 
 }
 
