@@ -49,6 +49,23 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		SELECT * FROM tbl_member WHERE num = #{num}
 	</select>
 	
+	<resultMap type="com.kb.domain.MemberVO" id="memberMap">
+		<id property="uid" column="uid" />
+		<result property="uid" column="uid" />
+		<result property="upw" column="upw" />
+		<result property="uname" column="uname" />
+		<collection property="authList" resultMap="authMap"></collection>
+	</resultMap>
+	
+	<resultMap type="com.kb.domain.AuthorVO" id="authMap">
+		<result property="uid" column="uid"/>
+		<result property="authority" column="authority"/>
+	</resultMap>
+	
+	<select id="readLogin" resultMap="memberMap">
+		SELECT tm.*,ta.authority FROM tbl_member as tm JOIN tbl_author as ta ON tm.uid = ta.uid WHERE tm.uid = #{userid}
+	</select>
+	
 	<update id="update">
 		UPDATE tbl_member SET uname = #{uname}, 
 						schoolname = #{schoolname}, 

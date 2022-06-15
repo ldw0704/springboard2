@@ -11,11 +11,17 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
-public class LoginSuccessHandler implements AuthenticationSuccessHandler{
+import lombok.extern.log4j.Log4j;
+
+
+@Log4j
+public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication auth) throws IOException, ServletException {
+		
+		log.info("handler");
 		List<String> roleNames = new ArrayList<String>();
 		
 		auth.getAuthorities().forEach(authority -> {
@@ -33,6 +39,8 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
 		}
 		
 		response.sendRedirect("/");
+		
 	}
 
+	
 }

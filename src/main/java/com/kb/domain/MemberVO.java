@@ -1,6 +1,7 @@
 package com.kb.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -16,4 +17,6 @@ public class MemberVO {
 	private String boardingplace;
 	private Date joindate;
 	private int coupon;
+	
+	private List<AuthorVO> authList;
 }
