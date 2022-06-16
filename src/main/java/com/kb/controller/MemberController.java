@@ -116,7 +116,7 @@ public class MemberController {
 		
 		service.insertAuthsByUid(vo);
 				
-		return "redirect:/member/getMemberAuths="+vo.getUid();
+		return "redirect:/member/getMemberAuths?uid="+vo.getUid();
 	}
 }
 
