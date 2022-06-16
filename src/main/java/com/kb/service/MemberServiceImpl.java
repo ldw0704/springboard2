@@ -4,9 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kb.domain.MemberVO;
+import com.kb.domain.AuthorVO;
 import com.kb.domain.MemberCriteria;
+import com.kb.mapper.AuthorMapper;
 import com.kb.mapper.MemberMapper;
 
 import lombok.AllArgsConstructor;
@@ -22,11 +25,16 @@ public class MemberServiceImpl implements MemberService {
 	@Setter(onMethod_ = @Autowired)
 	private MemberMapper mapper;
 	
+	@Setter(onMethod_ = @Autowired)
+	private AuthorMapper authMapper;
+	
 
 	@Override
+	@Transactional
 	public void register(MemberVO member) {
 		log.info("register");
 		mapper.insert(member);
+		authMapper.insert(member.getAuthList().get(0));
 	}
 
 	@Override
@@ -65,6 +73,20 @@ public class MemberServiceImpl implements MemberService {
 		log.info("getListWithCnt...................");
 		
 		return mapper.getListWithCnt(cri);
+	}
+
+	@Override
+	public List<AuthorVO> readAuthsByUid(String uid) {
+		
+		List<AuthorVO> list = authMapper.readAuthsByUid(uid);
+		
+		return list;
+	}
+
+	@Override
+	public void insertAuthsByUid(AuthorVO vo) {
+		authMapper.insert(vo);
+		
 	}
 	
 	

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -172,7 +173,7 @@
       </div>
       <div class="media-body">
         <div class="foldable">
-          <h5><a href="javascript:void(0)" class="username">John Doe</a></h5>
+          <h5><a href="javascript:void(0)" class="username">홍길동</h5>
           <ul>
             <li class="dropdown">
               <a href="javascript:void(0)" class="dropdown-toggle usertitle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -200,10 +201,31 @@
                 </li>
                 <li role="separator" class="divider"></li>
                 <li>
-                  <a class="text-color" href="logout.html">
+                  <a class="text-color" >
                     <span class="m-r-xs"><i class="fa fa-power-off"></i></span>
-                    <span>Home</span>
+                    <span class="logout">로그아웃</span>
                   </a>
+                  	<form action="/customLogout" id="logout" method="post">
+						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
+					
+					</form>
+					<script>
+					$(document).ready(function(){
+						
+						$(".logout").on("click",function(){
+							console.log("dfsd");
+							$("#logout").submit();
+						});
+						
+					});
+					
+					//onclick="logout_btn();"
+					function logout_btn(){
+						console.log("sdfsf");
+						$("#logout").submit();
+					}				
+					
+					</script>
                 </li>
               </ul>
             </li>
@@ -219,13 +241,25 @@
         <li class="has-submenu">
           <a href="javascript:void(0)" class="submenu-toggle">
             <i class="menu-icon zmdi zmdi-view-dashboard zmdi-hc-lg"></i>
-            <span class="menu-text">Dashboards</span>
+            <span class="menu-text">Dash boards</span>
             <i class="menu-caret zmdi zmdi-hc-sm zmdi-chevron-right"></i>
           </a>
           <ul class="submenu">
             <li><a href="index.html"><span class="menu-text">Dashboard 1</span></a></li>
             <li><a href="dashboard.2.html"><span class="menu-text">Dashboard 2</span></a></li>
             <li><a href="dashboard.3.html"><span class="menu-text">Dashboard 3</span></a></li>
+          </ul>
+        </li>
+        
+        <li class="has-submenu">
+          <a href="javascript:void(0)" class="submenu-toggle">
+            <i class="menu-icon zmdi zmdi-view-dashboard zmdi-hc-lg"></i>
+            <span class="menu-text">스마트 학습방</span>
+            <i class="menu-caret zmdi zmdi-hc-sm zmdi-chevron-right"></i>
+          </a>
+          <ul class="submenu">
+            <li><a href="/member/list"><span class="menu-text">회원관리</span></a></li>
+            <li><a href="/board/list"><span class="menu-text">갤러리</span></a></li>
           </ul>
         </li>
         

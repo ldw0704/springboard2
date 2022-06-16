@@ -21,6 +21,7 @@
 
 					<div class="panel-body">
 						<form id="frm" method="post" action="">
+						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
 						<input type="hidden" name="num" id="num" value="${member.num}">
 							<div class="form-group">
 								<label>회원명</label><input type="text" name="uname" id="uname" class="form-control" value="${member.uname}" required="required">

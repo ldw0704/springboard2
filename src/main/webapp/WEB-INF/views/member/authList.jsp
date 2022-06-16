@@ -8,46 +8,45 @@
 <jsp:include page="../includes/header.jsp"></jsp:include>
 
 			<div class="col-md-12">
-				<h4 class="m-b-lg">Member List Page</h4>
+				<h4 class="m-b-lg">Member Authority Page</h4>
 			</div><!-- END column -->
 
 
 			<div class="col-md-12">
 				<div class="widget p-lg">
-					<h4 style="display:inline;" class="m-b-lg">Member List Page</h4>
-					<a href="register" style="float:right;" class="btn btn-success" role="button">Register New Member</a>
-					<p class="m-b-lg docs">
-					</p>
+					<h4 style="display:inline;" class="m-b-lg">Member Authority Page</h4>
+					<p class="m-b-lg docs"></p>
 
 					<table class="table table-hover">
 						<thead>
-							<tr><th>#번호</th><th>회원명</th><th>학교명</th><th>학년반</th><th>전화번호</th><th>가입일</th><th>권한관리</th></tr>
+							<tr><th>#번호</th><th>회원아이디</th><th>권한</th></tr>
 						</thead>
-						<c:forEach items="${list}" var="member">
+						
+						<c:forEach items="${list}" var="author" varStatus="num">
 						<tr>
-							<td>${member.num}</td><td>
-							<a href="get?num=${member.num}">${member.uname}</a></td>
-							<td>${member.schoolname}</td>
-							<td>${member.gradeclass}</td>
-							<td>${member.uid}</td>
-							<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${member.joindate}"/></td>
-							<td><a href="getMemberAuths?uid=${member.uid }">권한추가/삭제</a></td>						
-						</tr>
+							<td>${num.count }</td>
+							<td>${author.uid }</td>
+							<td>${author.authority }</td>
+						</tr>						
 						</c:forEach>
+						
 					</table>
 					
 					
 					<div class="container-fluid">
 						<div class="row">
 						  <div class="col-xs-7 pagination">
-							  <form>
-								<select name="type" class="form-control" style="float:left; width:21%; height:32px;">
-									<option value="">전체</option>
-									<option value="uname" ${pageMaker.cri.type == "uname"?"selected='selected'":""}>학생명</option>
-									<option value="uid" ${pageMaker.cri.type == "uid"?"selected='selected'":""}>연락처</option>
+							  <form method="post" action="getMemberAuths">
+							  <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+							  <input type="hidden" name="uid" value="${uid }"/>
+								<select name="authority" class="form-control" style="float:left; width:40%; height:32px;">
+									<option value="">권한을 추가하세요</option>
+									<option value="ROLE_ADMIN" >관리자</option>
+									<option value="ROLE_MEMBER" >운영자</option>
+									<option value="ROLE_USER" >사용자</option>
 								</select>
-								<input type="text" name="keyword" placeholder="검색어를 입력하세요." value="${pageMaker.cri.keyword}" class="form-control" style="float:left; width:50%; height:32px;">
-								<button class="btn btn-default btn-sm" style="float:left;">검색</button>
+								
+								<button class="btn btn-default btn-sm" style="float:left;">권한추가</button>
 							  </form>
 						  </div>
 						  <div class="col-xs-5" style="text-align:right;">

@@ -3,6 +3,7 @@ package com.kb.service;
 import java.util.List;
 
 import com.kb.domain.MemberVO;
+import com.kb.domain.AuthorVO;
 import com.kb.domain.MemberCriteria;
 
 public interface MemberService {
@@ -20,4 +21,8 @@ public interface MemberService {
 	public List<MemberVO> getListWithPaging(MemberCriteria cri);
 
 	public int getListWithCnt(MemberCriteria cri);
+
+	public List<AuthorVO> readAuthsByUid(String uid);
+
+	public void insertAuthsByUid(AuthorVO vo);
 }

@@ -21,6 +21,7 @@
 
 					<div class="panel-body">
 						<form method="post" action="" enctype="multipart/form-data">
+						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>	
 							<div class="form-group">
 								<label>제목</label><input type="text" name="title" id="title" class="form-control" value="" required="required">
 							</div>
