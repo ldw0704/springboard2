@@ -89,7 +89,7 @@ public class RESTController {
 	@GetMapping(value = "/product/{cat}/{pid}")
 	public String[] getPath(@PathVariable("cat") String cat, @PathVariable("pid") String pid) {
 		
-		return new String[] {"category"+cat,"product"+pid};
+		return new String[] {"category : "+cat,"product : "+pid};
 	}
 
 }
