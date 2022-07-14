@@ -34,7 +34,10 @@ public class MemberServiceImpl implements MemberService {
 	public void register(MemberVO member) {
 		log.info("register");
 		mapper.insert(member);
-		authMapper.insert(member.getAuthList().get(0));
+		if(member.getAuthList()!=null) {
+			authMapper.insert(member.getAuthList().get(0));
+		}
+		
 	}
 
 	@Override

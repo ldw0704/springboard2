@@ -28,7 +28,7 @@
 		<security:access-denied-handler error-page="/error_page/err_403"/>
 		
 		<security:remember-me data-source-ref="dataSource" token-validity-seconds="604800"/>
-		<!-- <security:csrf disabled="true"/> -->
+		<security:csrf disabled="true"/>
 		
 	</security:http>
 	
